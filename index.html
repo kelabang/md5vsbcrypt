@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Kelompok 2</title>
+		<link rel="stylesheet" type="text/css" href="assets/terminal.css" />
+		<link rel="stylesheet" type="text/css" href="assets/form.css" />
+	</head>
+	<body>
+		<div class="navigation">
+			<ul>
+				<li class="ben">test setting</li>
+				<li class="bcr">bcrypt setting</li>
+				<li class="md5">md5 setting</li>
+
+				<li style="float:right" class="run"> >Run </li>
+				<li style="float:right" class="clear"> >Clear </li>
+			</ul>
+		</div>
+		<div class="container">
+			<div id="ben" class="displayed">
+				test setting
+				<form>
+					<input type="text" name="plaintext" placeholder="password">
+					<input type="text" name="fplaintext" placeholder="false password">
+					<input type="submit" name="run test" value="run benchmark">
+					<input class="clear" type="button" name="clear" value="clear">
+				</form>
+			</div>
+			<div id="bcr" class="displayed">
+				bcrypt setting
+				<form>
+					<input type="text" name="rounds" placeholder="power factor">
+					<input type="submit" name="run test" value="run benchmark">
+					<input class="clear" type="button" name="clear" value="clear">
+				</form>
+			</div>
+			<div id="md5" class="displayed">
+				md5 setting
+			</div>
+		</div>
+		<div class="card" style="display: none">
+			benchmark configuration 
+			
+		</div>
+		<br/>
+		<div style="clear:both;"></div>
+		<div id="window">
+		 	<div id="toolbar" style="display:none">
+				<div class="top">
+					<div id="lights">
+						<div class="light red">
+							<div class="glyph">×</div>
+							<div class="shine"></div>
+							<div class="glow"></div>
+						</div>				
+						<div class="light yellow">
+							<div class="glyph">-</div>
+							<div class="shine"></div>
+							<div class="glow"></div>
+						</div>
+						<div class="light green">
+							<div class="glyph">+</div>
+							<div class="shine"></div>
+							<div class="glow"></div>
+						</div>
+					</div>
+					<div id="title">
+						<div class="folder">
+							<div class="tab"></div>
+							<div class="body"></div>
+						</div>
+						Benchmark Bcrypt vs MD5
+					</div>
+					<div id="bubble">
+						<div class="shine"></div>
+						<div class="glow"></div>
+					</div>
+				</div>
+			</div>
+			<div id="body">
+				<p id="console" style="
+					overflow-y: auto;
+		    		max-height: 500px;
+				"> 
+					Benchmark Bcrypt(blowfish) vs MD5 <br />
+					Kelompok2:kamjar$  
+					<br id="last"/>
+				</p>
+				<div class="cursor"></div>	
+			</div>	
+		</div>
+		<script src="assets/jquery.min.js"></script>
+		<script src="socket.io/socket.io.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8" src="assets/main.js"></script> 
+		<script type="text/javascript" charset="utf-8" src="assets/form.js"></script> 
+	</body>
+</html>

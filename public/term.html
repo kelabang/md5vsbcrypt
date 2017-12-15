@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+  <head>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="socket.io.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+      function add_content(str){
+        console.log(str);
+        $('div').append('<p>' + $('<div/>').text(str).html() + '</p>');
+        $(window).scrollTop($('body').height() - $(window).height() + 80);
+      }
+      var socket = new io.Socket(null, {rememberTransport: false, port: 8080});
+      socket.connect();
+      socket.addEvent('message', function(data) {
+        add_content($.map(data, function(e,i) {
+          return String.fromCharCode(e);
+        }).join(''));
+      });
+      $(function(){
+        $('form').submit(function(e){
+          var input = $('input');
+          socket.send(input.val());
+          input.val('');
+          return false;
+        });
+        $('input').focus();
+      });
+    </script> 
+    <style type="text/css">
+      body, p, input {
+        font-family: fixed;
+        font-size: 13px;
+        border: none;
+      }
+      p { white-space: pre; }
+      p, form, input { margin:0; padding:0; }
+      input:focus { outline: none; border: none; }
+    </style>
+  </head>
+  <body>
+    <div></div>
+    <form>
+      &gt; <input>
+    </form>
+  </body>
+</html>

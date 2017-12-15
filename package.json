@@ -1,0 +1,23 @@
+{
+  "name": "kamjar",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "positive-test": "node ./index --mode=positive",
+    "negative-test": "node ./index --mode=negative"
+  },
+  "author": "Imam Tauhid",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "benchmark": "^2.1.4",
+    "md5": "^2.2.1",
+    "microtime": "^2.1.6",
+    "socket.io": "^2.0.4",
+    "systeminformation": "^3.33.8",
+    "yargs": "^10.0.3"
+  }
+}

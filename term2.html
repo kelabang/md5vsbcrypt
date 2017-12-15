@@ -1,0 +1,115 @@
+
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="socket.io/socket.io.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+	function add_content(str){
+		$('#console').append(str);
+		var objDiv = document.getElementById("console");
+		objDiv.scrollTop = objDiv.scrollHeight;
+	}
+	function ab2str(buf) {
+		var enc = new TextDecoder();
+		var arr = new Uint8Array(buf)
+		return enc.decode(arr)
+	}
+	function hasWhiteSpace(s) {
+		return s.indexOf(' ') >= 0;
+	}
+	var socket = io(window.location.origin);
+	socket.connect();
+	socket.on('message', function(data) {
+		add_content(ab2str(data))
+	});
+	$(function(){
+		$('form').submit(function(e){
+			e.preventDefault()
+
+			var input = $('input');
+			var plaintext = $('input[name="plaintext"]').val()
+			var fplaintext = $('input[name="fplaintext"]').val()
+			var rounds = $('input[name="rounds"]').val()
+
+			if(
+				hasWhiteSpace(plaintext) || hasWhiteSpace(fplaintext) || hasWhiteSpace(rounds)
+			) return alert('cannot using space in benchmark configuration input')
+
+			socket.send('npm run positive-test -- '+
+				'--spec '+
+				'--configuration '+
+				'--plaintext='+plaintext+' '+
+				'--fplaintext='+fplaintext+' '+
+				'--rounds='+rounds+' '+
+				'&& npm run negative-test -- '+
+				'--plaintext='+plaintext+' '+
+				'--fplaintext='+fplaintext+' '+
+				'--rounds='+rounds+' '
+			)
+			return false;
+		});
+		$('.clear').on('click', function () {
+			$('#console').html('')
+		})
+	});
+</script> 
+<div class="card">
+	benchmark configuration 
+	<form>
+		<label>Bcrypt</label>
+		<br>
+		<input type="text" name="plaintext" placeholder="plaintext">
+		<br>
+		<input type="text" name="fplaintext" placeholder="false plaintext">
+		<br>
+		<input type="text" name="rounds" placeholder="rounds">
+		<br>
+		<input type="submit" name="run test" value="run benchmark">
+		<input class="clear" type="button" name="clear" value="clear">
+	</form>
+</div>
+<br/>
+<div style="clear:both;"></div>
+<div id="window">
+ 	<div id="toolbar" style="display:none">
+		<div class="top">
+			<div id="lights">
+				<div class="light red">
+					<div class="glyph">×</div>
+					<div class="shine"></div>
+					<div class="glow"></div>
+				</div>				
+				<div class="light yellow">
+					<div class="glyph">-</div>
+					<div class="shine"></div>
+					<div class="glow"></div>
+				</div>
+				<div class="light green">
+					<div class="glyph">+</div>
+					<div class="shine"></div>
+					<div class="glow"></div>
+				</div>
+			</div>
+			<div id="title">
+				<div class="folder">
+					<div class="tab"></div>
+					<div class="body"></div>
+				</div>
+				Benchmark Bcrypt vs MD5
+			</div>
+			<div id="bubble">
+				<div class="shine"></div>
+				<div class="glow"></div>
+			</div>
+		</div>
+	</div>
+	<div id="body">
+		<p id="console" style="
+			overflow-y: auto;
+    		max-height: 500px;
+		"> 
+			Benchmark Bcrypt(blowfish) vs MD5 <br />
+			Kelompok2:kamjar$  
+			<br id="last"/>
+		</p>
+		<div class="cursor"></div>	
+	</div>	
+</div>
